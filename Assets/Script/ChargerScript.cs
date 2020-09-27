@@ -2,7 +2,7 @@
 
 public class ChargerScript : Interactable
 {
-    public override void Interact ()
+    protected override void Interact ()
     {
     	ThirdPersonController playerController = player.GetComponent<ThirdPersonController>();
 	    playerController.currentEnergy += 20;

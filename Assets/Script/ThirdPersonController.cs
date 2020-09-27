@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ThirdPersonController : MonoBehaviour
 {
-	public Rigidbody rb;
+	Rigidbody rb;
     public Camera cam;
 	Transform camTransform;
+	public UIScript UI;
 
 	public float speed = 16f;
 	public float maxVelocityChange = 10f;
@@ -14,19 +15,6 @@ public class ThirdPersonController : MonoBehaviour
 
 	public float turnSmoothTime = 0.1f;
 	float turnSmoothVelocity;
-
-
-	// Desired hovering height.
-	public float hoverHeight = 2.93f;
-
-	// The force applied per unit of distance below the desired height.
-    public float hoverForce = 5.0f;
-
-    // The amount that the lifting force is reduced per unit of upward speed.
-    // This damping tends to stop the object from bouncing after passing over
-    // something.
-    public float hoverDamp = 0.5f;
-
 
     public float boosting = 2f;
 	public float liftingpSpeed = 2f;
@@ -39,21 +27,22 @@ public class ThirdPersonController : MonoBehaviour
 
     public GameObject focus;
 
-    public EnergyBarScript energyBar;
     public float maxEnergy = 600f;
     public float currentEnergy;
 
-    public CollectedResource collectedResource;
     public int currentResource = 0; 
+
+    public bool pathFinding = false;
 	
 
     // Start is called before the first frame update
     void Start()
     {
+    	rb = GetComponent<Rigidbody>();
+
         camTransform = cam.GetComponent<Transform>();
 
         currentEnergy = maxEnergy;
-        energyBar.SetMaxEnergy(maxEnergy);
     }
 
     // Update is called once per frame
@@ -110,23 +99,20 @@ public class ThirdPersonController : MonoBehaviour
             FaceTarget();
         }
 
+        // interaction part end
 
-        updateUI();
-          
-    }
+        // minimap on off
 
-    void updateUI() 
-    {
+        if (Input.GetKeyDown(KeyCode.M)) {
+        	UI.AffectMinimap();
+        }
+
+
         // reduce engery overtime, every second coust 1 energy
         currentEnergy -= Time.deltaTime;
-        currentEnergy = Mathf.Max(currentEnergy, 0);
-
-        // update energy bar
-        energyBar.SetEnergy(currentEnergy);
-
-        // update collected resource
-        collectedResource.SetText(currentResource);
+        currentEnergy = Mathf.Max(currentEnergy, 0); 
     }
+
 
     void SetFocus(GameObject newFocus)
     {
@@ -192,28 +178,5 @@ public class ThirdPersonController : MonoBehaviour
         	currentEnergy -= Time.deltaTime * (liftingpCost - 1f);
         }
 
-
-        // Hover 
-        RaycastHit hit; 
-        Ray hoverRay = new Ray(transform.position, Vector3.down);
-
-        // Debug.DrawRay(transform.position, Vector3.down * hoverHeight);
-
-        if (Physics.Raycast(hoverRay, out hit, hoverHeight)) {
-			// The "error" in height is the difference between the desired height
-            // and the height measured by the raycast distance.
-            float hoverError = hoverHeight - hit.distance;
-
-            // Only apply a lifting force if the object is too low (ie, let
-            // gravity pull it downward if it is too high).
-            if (hoverError > 0)
-            {
-                // Subtract the damping from the lifting force and apply it to
-                // the rigidbody.
-                float upwardSpeed = rb.velocity.y;
-                float lift = hoverError * hoverForce - upwardSpeed * hoverDamp;
-                rb.AddForce(lift * Vector3.up, ForceMode.Acceleration);
-            }
-        }
     }
 }

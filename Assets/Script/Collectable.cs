@@ -2,7 +2,7 @@
 
 public class Collectable : Interactable
 {
-    public override void Interact ()
+    protected override void Interact ()
     {
     	ThirdPersonController playerController = player.GetComponent<ThirdPersonController>();
 	    ++playerController.currentResource;
@@ -10,4 +10,5 @@ public class Collectable : Interactable
 	    playerController.focus = null;
 	    Destroy(gameObject);
     }
+
 }

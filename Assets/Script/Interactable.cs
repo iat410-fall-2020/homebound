@@ -12,10 +12,15 @@ public class Interactable : MonoBehaviour
 
     public GameObject text;
 
-    public virtual void Interact () 
+    protected virtual void Interact () 
     {
     	 // this method is meant to override
     	Debug.Log("Interacting with " + transform.name);
+    }
+
+    protected virtual void constantUpdate() 
+    {
+
     }
 
     void Update () 
@@ -34,6 +39,8 @@ public class Interactable : MonoBehaviour
     	}
 
     	looking = false;
+
+        constantUpdate();
     }
 
     public void OnFocused (GameObject Player) 
@@ -46,7 +53,6 @@ public class Interactable : MonoBehaviour
     public void OnDefocused ()
     {
     	isFocus = false;
-    	player = null;
     	hasInteracted = false;
     }
 
