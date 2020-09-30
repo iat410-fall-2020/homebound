@@ -39,7 +39,7 @@ public class SpawnPathFinder : Interactable
 
     			newPathFinder.GetComponent<PathFinder>().MoveToPoint(targetLocation.position);
 
-    			Debug.Log("spawn");
+    			//Debug.Log("spawn");
 
     			spawnTimer = spawnGap;
     		}

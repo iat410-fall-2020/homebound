@@ -21,7 +21,7 @@ public class PathFinder : MonoBehaviour
     {
         selfDestoryTimer -= Time.deltaTime;
 
-        if (selfDestoryTimer <= 4.9) {
+        if (selfDestoryTimer <= 4.95) {
         	gfx.SetActive(true);
         }
 
