@@ -56,8 +56,12 @@ public class Interactable : MonoBehaviour
     	hasInteracted = false;
     }
 
-    public bool distanceCheck(Transform playerTransform) 
+    public bool distanceCheck(Transform playerTransform, Transform camTransform) 
     {	
+        Vector3 direction = (transform.position - camTransform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
+        //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        text.transform.rotation = lookRotation;
 
     	float distance = Vector3.Distance(playerTransform.position, transform.position);
 

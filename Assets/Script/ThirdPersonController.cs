@@ -43,6 +43,9 @@ public class ThirdPersonController : MonoBehaviour
         camTransform = cam.GetComponent<Transform>();
 
         currentEnergy = maxEnergy;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -78,7 +81,7 @@ public class ThirdPersonController : MonoBehaviour
                 && hit.transform.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
 
                 GameObject interactable = hit.transform.gameObject;
-                bool closeToInteract = interactable.GetComponent<Interactable>().distanceCheck(transform);
+                bool closeToInteract = interactable.GetComponent<Interactable>().distanceCheck(transform, camTransform);
 
                 if (Input.GetKeyDown(KeyCode.F) && closeToInteract) {
 
