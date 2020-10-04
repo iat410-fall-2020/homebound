@@ -1,12 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class ThirdPersonController : MonoBehaviour
 {
 	Rigidbody rb;
+
     public Camera cam;
-	Transform camTransform;
+    Transform camTransform;
+
+    public CinemachineVirtualCamera cinemachines;
+    public bool aim = false;
+
+    // public Vector3 rigHeight;
+    // public Vector3 rigR;
+	
 	public UIScript UI;
 
 	public float speed = 16f;
@@ -33,7 +42,13 @@ public class ThirdPersonController : MonoBehaviour
     public int currentResource = 0; 
 
     public bool pathFinding = false;
-	
+
+    public Transform weaponAttactedPoint;	
+	public List<GameObject> weapons = new List<GameObject>();
+	public int currentWeapon = 0;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +61,8 @@ public class ThirdPersonController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+
     }
 
     // Update is called once per frame
@@ -59,11 +76,23 @@ public class ThirdPersonController : MonoBehaviour
 
         moveDir = Vector3.zero;
 
+        if (aim) {
+        	float targetAngle = camTransform.eulerAngles.y;
+        	transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+
+        	weaponAttactedPoint.rotation = camTransform.rotation;
+        }
+
         if (direction.magnitude >= 0.1f) 
         {
+        	
         	float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
-        	float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-        	transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+        	if (!aim) {
+	        	float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+	        	transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        	}
+        	
 
         	moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         	//controller.Move(moveDir.normalized * speed * Time.deltaTime);
@@ -109,6 +138,36 @@ public class ThirdPersonController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M)) {
         	UI.AffectMinimap();
         }
+
+        
+
+
+        if (!aim) {
+        	// check mouse scrolling
+			if(Input.GetAxisRaw("Mouse ScrollWheel") > 0)
+			{
+			 //wheel goes up
+				--currentWeapon;
+
+				if (currentWeapon < 0) {
+					currentWeapon = weapons.Count - 1;
+				}
+
+				UI.ChangeWeapon();
+			}
+			else if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+			{
+			 //wheel goes down
+				++currentWeapon;
+
+				if (currentWeapon >= weapons.Count) {
+					currentWeapon = 0;
+				}
+
+				UI.ChangeWeapon();
+			}
+        }
+        
 
 
         // reduce engery overtime, every second coust 1 energy
@@ -160,11 +219,17 @@ public class ThirdPersonController : MonoBehaviour
 
     	// Apply a force that attempts to reach our target velocity
         Vector3 velocity = rb.velocity;
+        Vector3 velocityChange;
 
-        Vector3 velocityChange = (moveDir * speed - velocity);
-        if (Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0) {
+        if (aim) {
+        	velocityChange = (moveDir * (speed / 2f) - velocity);
+        }
+        else if (Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0) {
     		velocityChange = (moveDir * speed * boosting - velocity);
     		currentEnergy -= Time.deltaTime * (boostingCost - 1f);
+    	}
+    	else {
+    		velocityChange = (moveDir * speed - velocity);
     	}
 
         velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
