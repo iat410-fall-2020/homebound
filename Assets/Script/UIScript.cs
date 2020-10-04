@@ -30,6 +30,10 @@ public class UIScript : MonoBehaviour
 
         // update collected resource
         collectedResource.SetText(player.currentResource);
+
+        // upadate ammo amount
+        Weapons playerWeapon = player.weapons[player.currentWeapon].GetComponent<Weapons>();
+        weaponUI.AmmoDisplay(playerWeapon.currentMag, playerWeapon.totalAmmo);
     }
 
     public void AffectMinimap() {

@@ -7,11 +7,12 @@ public class Weapons : MonoBehaviour
 	public int magazineSize;
 	public int currentMag;
 	public float reloadTime;
-	float reloadCountDown;
+	public float reloadCountDown;
 	public int totalAmmo;
 	public float power;
 	public GameObject bullet;
 	public Transform barrelPivot;
+	protected bool reloading = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,13 +23,36 @@ public class Weapons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (reloadCountDown >= 0) {
+    	
+
+        if (reloading) {
         	reloadCountDown -= Time.deltaTime;
+
+        	if (reloadCountDown <= 0) {
+        		reloading = false;
+
+        		currentMag = Mathf.Min(magazineSize, totalAmmo);
+        		totalAmmo -= magazineSize;
+        		totalAmmo = Mathf.Max(0, totalAmmo);
+        	}
         }
     }
 
-    public virtual void Fire() 
+    public void Fire() 
     {
+    	if (!reloading) {
+    		WeaponBehavior();
+
+    		if (currentMag <= 0) {
+	    		reloading = true;
+
+	    		reloadCountDown = reloadTime;
+	    	}
+    	}
+    	
+    }
+
+    protected virtual void WeaponBehavior () {
     	// this method is meant to override
     	Debug.Log("Fire " + transform.name);
     }

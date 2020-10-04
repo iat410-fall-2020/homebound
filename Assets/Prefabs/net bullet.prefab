@@ -4920,6 +4920,7 @@ GameObject:
   - component: {fileID: 8834348203654509536}
   - component: {fileID: 4009337820946343277}
   - component: {fileID: -9120226281843498535}
+  - component: {fileID: -2018421203309389923}
   m_Layer: 14
   m_Name: net bullet
   m_TagString: Untagged
@@ -5021,3 +5022,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2018421203309389923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6495063683695247282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01e4c5331f12c9a4abe87fe384f8b27a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checker: {fileID: 5719725691204474569}
+  selfDestroyTimer: 0.2

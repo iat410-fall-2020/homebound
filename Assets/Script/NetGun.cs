@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class NetGun : Weapons
 {
-    public override void Fire ()
+    protected override void WeaponBehavior ()
     {
-    	Rigidbody bulletrb = Instantiate(bullet, barrelPivot.position, barrelPivot.rotation).GetComponent<Rigidbody>();
-    	bulletrb.velocity = barrelPivot.forward * power;
+		Rigidbody bulletrb = Instantiate(bullet, barrelPivot.position, barrelPivot.rotation).GetComponent<Rigidbody>();
+		bulletrb.velocity = barrelPivot.forward * power;
+
+		--currentMag;
+    	
     }
 }
