@@ -11,12 +11,12 @@ public class Weapons : MonoBehaviour
 	public int totalAmmo;
 	public float power;
 	public GameObject bullet;
-	public Transform shootArea;
+	public Transform barrelPivot;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentMag = magazineSize;
     }
 
     // Update is called once per frame

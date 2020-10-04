@@ -81,6 +81,13 @@ public class ThirdPersonController : MonoBehaviour
         	transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
 
         	weaponAttactedPoint.rotation = camTransform.rotation;
+
+        	weapons[currentWeapon].SetActive(aim);
+
+
+        	if (Input.GetMouseButtonDown(0)) {
+        		weapons[currentWeapon].GetComponent<Weapons>().Fire();
+        	}
         }
 
         if (direction.magnitude >= 0.1f) 
@@ -91,6 +98,7 @@ public class ThirdPersonController : MonoBehaviour
         	if (!aim) {
 	        	float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 	        	transform.rotation = Quaternion.Euler(0f, angle, 0f);
+	        	weapons[currentWeapon].SetActive(aim);
         	}
         	
 

@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class ChargerScript : Interactable
+public class NetGun : Weapons
 {
-    protected override void Fire ()
+    public override void Fire ()
     {
-    	
+    	Rigidbody bulletrb = Instantiate(bullet, barrelPivot.position, barrelPivot.rotation).GetComponent<Rigidbody>();
+    	bulletrb.velocity = barrelPivot.forward * power;
     }
 }
