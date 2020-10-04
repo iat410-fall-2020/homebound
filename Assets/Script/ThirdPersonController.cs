@@ -32,7 +32,7 @@ public class ThirdPersonController : MonoBehaviour
 	public float boostingCost = 5f;
 	public float liftingpCost = 10f;
 
-    public LayerMask ignoredLayer;
+    public LayerMask targetLayer;
 
     public GameObject focus;
 
@@ -82,7 +82,7 @@ public class ThirdPersonController : MonoBehaviour
 
         	weaponAttactedPoint.rotation = camTransform.rotation;
 
-        	weapons[currentWeapon].GetComponent<Renderer>().enabled  = aim;
+        	weapons[currentWeapon].GetComponent<Renderer>().enabled = aim;
 
 
         	// Weapon firing
@@ -91,6 +91,9 @@ public class ThirdPersonController : MonoBehaviour
         			weapons[currentWeapon].GetComponent<Weapons>().Fire();
         		}
         	}
+        }
+        else {
+            weapons[currentWeapon].GetComponent<Renderer>().enabled = aim;
         }
 
         if (direction.magnitude >= 0.1f) 
@@ -101,7 +104,6 @@ public class ThirdPersonController : MonoBehaviour
         	if (!aim) {
 	        	float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 	        	transform.rotation = Quaternion.Euler(0f, angle, 0f);
-	        	weapons[currentWeapon].GetComponent<Renderer>().enabled  = aim;
         	}
         	
 
@@ -115,10 +117,12 @@ public class ThirdPersonController : MonoBehaviour
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100, ~ignoredLayer)) {
+        if (Physics.Raycast(ray, out hit, 100, targetLayer)) {
 
-            if (hit.transform != null 
-                && hit.transform.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
+            // if (hit.transform != null 
+            //     && hit.transform.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
+
+            if (hit.transform != null) {
 
                 GameObject interactable = hit.transform.gameObject;
                 bool closeToInteract = interactable.GetComponent<Interactable>().distanceCheck(transform, camTransform);

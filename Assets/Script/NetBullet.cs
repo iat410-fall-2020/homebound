@@ -6,7 +6,12 @@ public class NetBullet : MonoBehaviour
 {
 	public GameObject checker;
 	public float selfDestroyTimer;
-	bool selfDestory = false;
+	bool hit = false;
+
+	public List<GameObject> capturedAnimals = new List<GameObject>();
+
+	public LayerMask animalLayer;
+    public LayerMask ignoreLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -17,13 +22,21 @@ public class NetBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (hit) {
+        	selfDestroyTimer -= Time.deltaTime;
+
+        	if (selfDestroyTimer <= 0 && capturedAnimals.Count <= 0){
+        		Destroy(gameObject);
+        	}
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-    	if (!selfDestory) {
-    		selfDestory = true;
+    	if (!hit && 
+            ((ignoreLayer & 1 << collision.collider.gameObject.layer) != 1 << collision.collider.gameObject.layer)) {
+            
+    		hit = true;
 
     		Rigidbody rb = GetComponent<Rigidbody>();
     		rb.velocity = Vector3.zero;
@@ -32,36 +45,36 @@ public class NetBullet : MonoBehaviour
 
     		rb.isKinematic = true;
 
-    		Destroy(gameObject, selfDestroyTimer);
+    		//Destroy(gameObject, selfDestroyTimer);
     	}
     }
 
     void OnTriggerEnter(Collider collider)
     {
-    	if (selfDestory && collider.gameObject.layer == LayerMask.NameToLayer("Animal")){
-    		Destroy(collider.gameObject.GetComponent<Animator>());
-    		Destroy(collider.gameObject.GetComponent<AutoMoveRotate>());
+    	//Debug.Log(collider.gameObject.layer);
+    	if (hit && 
+    		((animalLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer)){
 
+    		bool duplicate = false;
+    		GameObject newAnimal = collider.transform.root.gameObject;
 
+    		foreach (GameObject animal in capturedAnimals) {
+    			if (animal == newAnimal) {
+    				duplicate = true;
+    				break;
+    			}
+    		}
+    		
 
-    		collider.gameObject.GetComponent<Interactable>().enabled = true;
-    		collider.gameObject.layer = LayerMask.NameToLayer("Interactable");
-    		collider.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-
-    		//ChangeLayersRecursively(collider.gameObject.transform, "Interactable");
+    		if (!duplicate) {
+    			capturedAnimals.Add(newAnimal);
+    			newAnimal.GetComponent<Animal>().GetCaptured();
+    			newAnimal.GetComponent<CaputredAnimal>().bullet = this;
+    		}
 
     		
     	}
         
         
     }
-
-    void ChangeLayersRecursively(Transform trans, string name)
-	{
-	     trans.gameObject.layer = LayerMask.NameToLayer(name);
-	     foreach(Transform child in trans)
-	     {            
-	         ChangeLayersRecursively(child, name);
-	     }
-	}
 }
