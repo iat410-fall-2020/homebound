@@ -34,6 +34,7 @@ public class TetherBullet : MonoBehaviour
     		Rigidbody rb = GetComponent<Rigidbody>();
     		rb.velocity = Vector3.zero;
 
+ 			rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
     		rb.isKinematic = true;
 
     		Destroy(gameObject, selfDestroyTimer);

@@ -43,6 +43,7 @@ public class NetBullet : MonoBehaviour
 
     		checker.SetActive(true);
 
+            rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
     		rb.isKinematic = true;
 
     		//Destroy(gameObject, selfDestroyTimer);
