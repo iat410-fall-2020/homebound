@@ -11,7 +11,7 @@ public class ThirdPersonController : MonoBehaviour
     Transform camTransform;
 
     public CinemachineVirtualCamera cinemachines;
-    
+
     public bool aim = false;
     public bool displayWeaponWhenWalking = false;
 
@@ -265,15 +265,17 @@ public class ThirdPersonController : MonoBehaviour
         // apply lifing force when pressing space
         spacePressed = false;
 
-        if (Input.GetKey(KeyCode.Space) && currentEnergy > 0 && liftingtimer > 0)
-        {
-        	// Debug.Log("spaced hited");
-        	rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
-        	currentEnergy -= Time.deltaTime * (liftingpCost - 1f);
-
-            liftingtimer -= Time.deltaTime * 2;
-
+        if (Input.GetKey(KeyCode.Space))
+        {   
+            // Debug.Log("spaced hited");
             spacePressed = true;
+
+            if (currentEnergy > 0 && liftingtimer > 0) {
+                rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
+                currentEnergy -= Time.deltaTime * (liftingpCost - 1f);
+
+                liftingtimer -= Time.deltaTime * 2;
+            }            
         }
 
 
