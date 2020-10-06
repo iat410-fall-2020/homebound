@@ -35,15 +35,16 @@ public class AutoMoveRotate : MonoBehaviour
 //         targetvelocity.y = (targetvelocity.y + 1) * movement.y;
 // Debug.Log(targetvelocity);
         
-
         Vector3 velocityChange = (GetComponent<Transform>().forward * speed  - velocity);
 
         velocityChange.x = Mathf.Clamp(velocityChange.x, -999, 999);
         velocityChange.z = Mathf.Clamp(velocityChange.z, -999, 999);
-        velocityChange.y = Mathf.Clamp(velocityChange.y, -999, 999);;
+        velocityChange.y = 0;
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
 
-        rb.AddTorque(rotation, ForceMode.VelocityChange);
+        transform.rotation = Quaternion.Euler(transform.eulerAngles + rotation);
+
+        // rb.AddTorque(rotation, ForceMode.VelocityChange);       
 
     }
 }

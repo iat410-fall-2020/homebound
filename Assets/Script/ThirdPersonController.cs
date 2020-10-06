@@ -159,38 +159,51 @@ public class ThirdPersonController : MonoBehaviour
         	UI.AffectMinimap();
         }
 
+
+        // check if space is pressed 
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space)){
+            spacePressed = !spacePressed;
+        }
+
+        // weapon reload
+        if (Input.GetKeyDown(KeyCode.R) && weapons.Count > 0) {
+            weapons[currentWeapon].GetComponent<Weapons>().Reload();
+        }
+
         
 
 
     	// check mouse scrolling
-		if(Input.GetAxisRaw("Mouse ScrollWheel") > 0)
-		{
-		 //wheel goes up
+        if (Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
             weapons[currentWeapon].GetComponent<Renderer>().enabled = false;
-			--currentWeapon;
 
-			if (currentWeapon < 0) {
-				currentWeapon = weapons.Count - 1;
-			}
+            if(Input.GetAxisRaw("Mouse ScrollWheel") > 0)
+            {
+                //wheel goes up
+                --currentWeapon;
 
-			UI.ChangeWeapon();
+                if (currentWeapon < 0) {
+                    currentWeapon = weapons.Count - 1;
+                }
+            }
+            else if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+            {
+             //wheel goes down
 
-            weapons[currentWeapon].GetComponent<Renderer>().enabled = true;
-		}
-		else if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
-		{
-		 //wheel goes down
-            weapons[currentWeapon].GetComponent<Renderer>().enabled = false;
-			++currentWeapon;
+                ++currentWeapon;
 
-			if (currentWeapon >= weapons.Count) {
-				currentWeapon = 0;
-			}
+                if (currentWeapon >= weapons.Count) {
+                    currentWeapon = 0;
+                }
+            }
 
-			UI.ChangeWeapon();
+            UI.ChangeWeapon();
 
-            weapons[currentWeapon].GetComponent<Renderer>().enabled = true;
-		}
+            if (displayWeaponWhenWalking) {
+                weapons[currentWeapon].GetComponent<Renderer>().enabled = true;
+            }  
+
+        }	
 
 
 
@@ -263,19 +276,13 @@ public class ThirdPersonController : MonoBehaviour
 
 
         // apply lifing force when pressing space
-        spacePressed = false;
-
-        if (Input.GetKey(KeyCode.Space))
+        if (spacePressed && currentEnergy > 0 && liftingtimer > 0)
         {   
             // Debug.Log("spaced hited");
-            spacePressed = true;
+            rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
+            currentEnergy -= Time.deltaTime * (liftingpCost - 1f);
 
-            if (currentEnergy > 0 && liftingtimer > 0) {
-                rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
-                currentEnergy -= Time.deltaTime * (liftingpCost - 1f);
-
-                liftingtimer -= Time.deltaTime * 2;
-            }            
+            liftingtimer -= Time.deltaTime * 2;         
         }
 
 

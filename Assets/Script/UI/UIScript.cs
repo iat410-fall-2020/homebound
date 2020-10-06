@@ -11,6 +11,8 @@ public class UIScript : MonoBehaviour
 	public CollectedResource collectedResource;
     public WeaponUISection weaponUI;
 
+    public GameObject reloadBar;
+
 	public GameObject Minimap;
 
 	bool minimapStatus = false;
@@ -40,6 +42,15 @@ public class UIScript : MonoBehaviour
         // upadate ammo amount
         Weapons playerWeapon = player.weapons[player.currentWeapon].GetComponent<Weapons>();
         weaponUI.AmmoDisplay(playerWeapon.currentMag, playerWeapon.totalAmmo);
+
+        // reload bar
+        if (playerWeapon.isReloading()) {
+            reloadBar.SetActive(true);
+            reloadBar.GetComponent<ReloadBar>().BarUpdate(playerWeapon.reloadCountDown / playerWeapon.reloadTime, playerWeapon.reloadCountDown);
+        }
+        else {
+            reloadBar.SetActive(false);
+        }
     }
 
     public void AffectMinimap() {

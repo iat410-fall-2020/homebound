@@ -31,10 +31,20 @@ public class Weapons : MonoBehaviour
         	if (reloadCountDown <= 0) {
         		reloading = false;
 
-        		currentMag = Mathf.Min(magazineSize, totalAmmo);
-        		totalAmmo -= magazineSize;
+                int deductAmmo = magazineSize - currentMag;
+
+        		currentMag += Mathf.Min(deductAmmo, totalAmmo);	
+                totalAmmo -= deductAmmo;
         		totalAmmo = Mathf.Max(0, totalAmmo);
         	}
+        }
+    }
+
+    public void Reload() {
+        if (!reloading && currentMag < magazineSize && totalAmmo > 0) {
+
+            reloading = true;
+            reloadCountDown = reloadTime;
         }
     }
 
@@ -44,9 +54,7 @@ public class Weapons : MonoBehaviour
     		WeaponBehavior();
 
     		if (currentMag <= 0) {
-	    		reloading = true;
-
-	    		reloadCountDown = reloadTime;
+	    		Reload();
 	    	}
     	}
     	
@@ -56,4 +64,8 @@ public class Weapons : MonoBehaviour
     	// this method is meant to override
     	Debug.Log("Fire " + transform.name);
     }
-}
+
+    public bool isReloading() {
+        return reloading;
+    }
+ }
