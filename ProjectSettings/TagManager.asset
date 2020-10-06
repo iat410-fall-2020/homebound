@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Head
+  - NetGun
+  - TetherGun
+  - Trap
   layers:
   - Default
   - TransparentFX

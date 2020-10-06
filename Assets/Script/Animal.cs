@@ -27,14 +27,15 @@ public class Animal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isStuned) {
+        if (isStuned && !isCaptured) {
         	stunedTimer -= Time.deltaTime;
 
         	if (stunedTimer <= 0) {
         		isStuned = false;
 
-        		gameObject.GetComponent<AutoMoveRotate>().enabled = true;
+    			gameObject.GetComponent<AutoMoveRotate>().enabled = true;
 				animator.SetBool(isStunedParam, isStuned);
+        			
         	}
         }
     }

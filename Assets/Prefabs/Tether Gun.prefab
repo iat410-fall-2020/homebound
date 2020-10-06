@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6634921437250000356}
   m_Layer: 10
   m_Name: Tether Gun
-  m_TagString: Untagged
+  m_TagString: TetherGun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

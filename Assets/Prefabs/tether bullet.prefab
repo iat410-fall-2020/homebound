@@ -4932,8 +4932,8 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 1024
-  stunTime: 2
-  criticalStun: 4
+  stunTime: 4
+  criticalStun: 8
 --- !u!135 &4697026947439676334
 SphereCollider:
   m_ObjectHideFlags: 0

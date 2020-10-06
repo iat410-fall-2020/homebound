@@ -53,7 +53,7 @@ public class NetBullet : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
     	//Debug.Log(collider.gameObject.layer);
-    	if (hit && 
+    	if (hit && selfDestroyTimer >= 0 &&
     		((animalLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer)){
 
     		bool duplicate = false;
@@ -67,9 +67,10 @@ public class NetBullet : MonoBehaviour
     		}
     		
 
-    		if (!duplicate) {
+    		if (!duplicate && !newAnimal.GetComponent<Animal>().isCaptured) {
     			capturedAnimals.Add(newAnimal);
     			newAnimal.GetComponent<Animal>().GetCaptured();
+                newAnimal.GetComponent<CaputredAnimal>().enabled = true;
     			newAnimal.GetComponent<CaputredAnimal>().bullet = this;
     		}
 
