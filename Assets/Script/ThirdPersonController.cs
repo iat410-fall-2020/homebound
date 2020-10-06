@@ -29,6 +29,10 @@ public class ThirdPersonController : MonoBehaviour
 	public float liftingpSpeed = 2f;
 	public float maxLiftingSpeed = 10f;
 
+    public float liftingTime = 5f;
+    public float liftingtimer = 5f;
+    bool spacePressed = false;
+
 	public float boostingCost = 5f;
 	public float liftingpCost = 10f;
 
@@ -92,9 +96,6 @@ public class ThirdPersonController : MonoBehaviour
         		}
         	}
         }
-        else {
-            weapons[currentWeapon].GetComponent<Renderer>().enabled = aim;
-        }
 
         if (direction.magnitude >= 0.1f) 
         {
@@ -104,6 +105,8 @@ public class ThirdPersonController : MonoBehaviour
         	if (!aim) {
 	        	float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 	        	transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                // weapons[currentWeapon].GetComponent<Renderer>().enabled = aim;
         	}
         	
 
@@ -157,32 +160,36 @@ public class ThirdPersonController : MonoBehaviour
         
 
 
-        if (!aim) {
-        	// check mouse scrolling
-			if(Input.GetAxisRaw("Mouse ScrollWheel") > 0)
-			{
-			 //wheel goes up
-				--currentWeapon;
+    	// check mouse scrolling
+		if(Input.GetAxisRaw("Mouse ScrollWheel") > 0)
+		{
+		 //wheel goes up
+            weapons[currentWeapon].GetComponent<Renderer>().enabled = false;
+			--currentWeapon;
 
-				if (currentWeapon < 0) {
-					currentWeapon = weapons.Count - 1;
-				}
-
-				UI.ChangeWeapon();
+			if (currentWeapon < 0) {
+				currentWeapon = weapons.Count - 1;
 			}
-			else if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
-			{
-			 //wheel goes down
-				++currentWeapon;
 
-				if (currentWeapon >= weapons.Count) {
-					currentWeapon = 0;
-				}
+			UI.ChangeWeapon();
 
-				UI.ChangeWeapon();
+            weapons[currentWeapon].GetComponent<Renderer>().enabled = true;
+		}
+		else if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+		{
+		 //wheel goes down
+            weapons[currentWeapon].GetComponent<Renderer>().enabled = false;
+			++currentWeapon;
+
+			if (currentWeapon >= weapons.Count) {
+				currentWeapon = 0;
 			}
-        }
-        
+
+			UI.ChangeWeapon();
+
+            weapons[currentWeapon].GetComponent<Renderer>().enabled = true;
+		}
+
 
 
         // reduce engery overtime, every second coust 1 energy
@@ -254,11 +261,23 @@ public class ThirdPersonController : MonoBehaviour
 
 
         // apply lifing force when pressing space
-        if (Input.GetKey(KeyCode.Space) && currentEnergy > 0)
+        if (Input.GetKey(KeyCode.Space) && currentEnergy > 0 && liftingtimer > 0)
         {
         	// Debug.Log("spaced hited");
         	rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
         	currentEnergy -= Time.deltaTime * (liftingpCost - 1f);
+
+            liftingtimer -= Time.deltaTime * 2;
+
+            spacePressed = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space)) {
+            spacePressed = false;
+        }
+
+        if (liftingtimer < liftingTime && !spacePressed) {
+            liftingtimer += Time.deltaTime;
         }
 
     }
