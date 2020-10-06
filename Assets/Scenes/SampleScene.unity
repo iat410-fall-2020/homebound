@@ -85921,10 +85921,10 @@ MonoBehaviour:
   sprinting: 32
   sprintingCost: 5
   liftingpSpeed: 20
-  maxLiftingSpeed: 10
+  maxLiftingSpeed: 20
   liftingpCost: 10
-  maxLiftingTime: 5
-  liftingtimer: 5
+  maxLiftingTime: 3
+  liftingtimer: 3
   targetLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -90207,17 +90207,6 @@ Transform:
   m_Father: {fileID: 912990696}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &1718177984 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7131386921393198805, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-  m_PrefabInstance: {fileID: 5614729326420550862}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36e8c5107c9232a4e8851ad676c54aec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1737076715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -92644,10 +92633,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3355300703401689470, guid: 7d2ebab6278119e4cb02841eafc8dede, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4640062767600973314, guid: 7d2ebab6278119e4cb02841eafc8dede, type: 3}
       propertyPath: m_Name
       value: Net Gun
@@ -92716,10 +92701,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 912990696}
     m_Modifications:
-    - target: {fileID: 408039405747846693, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-      propertyPath: m_Value
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5614729326891299345, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
       propertyPath: m_Name
       value: HUD
@@ -92772,10 +92753,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 912990698}
-    - target: {fileID: 5614729326891299375, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-      propertyPath: rocketBar
-      value: 
-      objectReference: {fileID: 1718177984}
     - target: {fileID: 5614729327602248944, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -92791,30 +92768,6 @@ PrefabInstance:
     - target: {fileID: 5845297996173360070, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202067373568153241, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-      propertyPath: m_TagString
-      value: NetGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202067373568153241, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-      propertyPath: m_Name
-      value: netGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202067373577320784, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-      propertyPath: m_Name
-      value: teatherGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202067373577320784, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-      propertyPath: m_TagString
-      value: TetherGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202067374687942797, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-      propertyPath: m_TagString
-      value: Trap
-      objectReference: {fileID: 0}
-    - target: {fileID: 6202067374687942797, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
-      propertyPath: m_Name
-      value: trap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
