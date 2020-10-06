@@ -21,7 +21,7 @@ public class UIScript : MonoBehaviour
     void Start()
     {
         energyBar.SetMax(player.maxEnergy);
-        rocketBar.SetMax(player.maxLiftingTime);
+        rocketBar.SetMax(player.maxOverHeatTime);
 
         Minimap.SetActive(minimapStatus);
         ChangeWeapon();
@@ -34,7 +34,7 @@ public class UIScript : MonoBehaviour
         energyBar.SetCurrent(player.currentEnergy);
 
         // update rocket bar
-        rocketBar.SetCurrent(player.liftingtimer);
+        rocketBar.SetCurrent(player.overHeatTimer);
 
         // update collected resource
         collectedResource.SetText(player.currentResource);

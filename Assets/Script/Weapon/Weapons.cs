@@ -23,6 +23,8 @@ public class Weapons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        constantUpdate(); 
     	
 
         if (reloading) {
@@ -60,12 +62,19 @@ public class Weapons : MonoBehaviour
     	
     }
 
+    public bool isReloading() 
+    {
+        return reloading;
+    }
+
+
+    protected virtual void constantUpdate() 
+    {
+
+    }
+
     protected virtual void WeaponBehavior () {
     	// this method is meant to override
     	Debug.Log("Fire " + transform.name);
-    }
-
-    public bool isReloading() {
-        return reloading;
-    }
+    }  
  }
