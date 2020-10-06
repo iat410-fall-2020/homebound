@@ -6,16 +6,21 @@ using UnityEngine.UI;
 public class WeaponUISection : MonoBehaviour
 {
 	public List<Graphic> weapons = new List<Graphic>();
-	int currentWeapon = 0;
 
 	public Text currentAmmo;
 	public Text totalAmmo;
 
-    public void ChangeWeapon(int n) {
-    	weapons[currentWeapon].color = Color.white;
-    	weapons[n].color = Color.blue;
+    public void ChangeWeapon(string tag) {
 
-    	currentWeapon = n;
+        foreach (Graphic g in weapons) {
+            if (g.tag == tag) {
+                g.color = Color.blue;
+            }
+            else {
+                g.color = Color.white;
+            }
+        }  	
+
     }
 
     public void AmmoDisplay(int current, int total) {

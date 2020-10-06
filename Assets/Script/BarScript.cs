@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnergyBarScript : MonoBehaviour
+public class BarScript : MonoBehaviour
 {
 	public Slider slider;
 	public Gradient gradient;
 	public Image fill;
 
-	public void SetMaxEnergy (float energy)
+	public void SetMax (float max)
 	{
-		slider.maxValue = energy;
-		slider.value = energy;
+		slider.maxValue = max;
+		slider.value = max;
 
 		fill.color = gradient.Evaluate(1f);
 	}
 
-    public void SetEnergy(float energy) 
+    public void SetCurrent(float current) 
     {
-    	slider.value = energy;
+    	slider.value = current;
 
     	fill.color = gradient.Evaluate(slider.normalizedValue);
     }

@@ -533,6 +533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   energyBar: {fileID: 5614729326587259772}
+  rocketBar: {fileID: 7131386921393198805}
   collectedResource: {fileID: 5614729327948522283}
   weaponUI: {fileID: 6202067375120867628}
   Minimap: {fileID: 5614729326610371328}
@@ -1194,8 +1195,8 @@ GameObject:
   - component: {fileID: 6202067373568153446}
   - component: {fileID: 6202067373568153447}
   m_Layer: 10
-  m_Name: 1
-  m_TagString: Untagged
+  m_Name: netGun
+  m_TagString: NetGun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1270,8 +1271,8 @@ GameObject:
   - component: {fileID: 6202067373577320797}
   - component: {fileID: 6202067373577320798}
   m_Layer: 10
-  m_Name: 2
-  m_TagString: Untagged
+  m_Name: teatherGun
+  m_TagString: TetherGun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1504,8 +1505,8 @@ GameObject:
   - component: {fileID: 6202067374687942794}
   - component: {fileID: 6202067374687942795}
   m_Layer: 10
-  m_Name: 3
-  m_TagString: Untagged
+  m_Name: trap
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -11,11 +11,10 @@ public class ThirdPersonController : MonoBehaviour
     Transform camTransform;
 
     public CinemachineVirtualCamera cinemachines;
+    
     public bool aim = false;
+    public bool displayWeaponWhenWalking = false;
 
-    // public Vector3 rigHeight;
-    // public Vector3 rigR;
-	
 	public UIScript UI;
 
 	public float speed = 16f;
@@ -25,16 +24,17 @@ public class ThirdPersonController : MonoBehaviour
 	public float turnSmoothTime = 0.1f;
 	float turnSmoothVelocity;
 
-    public float boosting = 2f;
-	public float liftingpSpeed = 2f;
-	public float maxLiftingSpeed = 10f;
+    public float sprinting = 32f;
+    public float sprintingCost = 5f;
 
-    public float liftingTime = 5f;
+	public float liftingpSpeed = 500f;
+	public float maxLiftingSpeed = 10f;
+    public float liftingpCost = 10f;
+
+    public float maxLiftingTime = 5f;
     public float liftingtimer = 5f;
     bool spacePressed = false;
-
-	public float boostingCost = 5f;
-	public float liftingpCost = 10f;
+	
 
     public LayerMask targetLayer;
 
@@ -106,7 +106,9 @@ public class ThirdPersonController : MonoBehaviour
 	        	float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 	        	transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-                // weapons[currentWeapon].GetComponent<Renderer>().enabled = aim;
+                if (!displayWeaponWhenWalking) {
+                    weapons[currentWeapon].GetComponent<Renderer>().enabled = aim;
+                }        
         	}
         	
 
@@ -247,8 +249,8 @@ public class ThirdPersonController : MonoBehaviour
         	velocityChange = (moveDir * (speed / 2f) - velocity);
         }
         else if (Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0) {
-    		velocityChange = (moveDir * speed * boosting - velocity);
-    		currentEnergy -= Time.deltaTime * (boostingCost - 1f);
+    		velocityChange = (moveDir * sprinting - velocity);
+    		currentEnergy -= Time.deltaTime * (sprintingCost - 1f);
     	}
     	else {
     		velocityChange = (moveDir * speed - velocity);
@@ -261,6 +263,8 @@ public class ThirdPersonController : MonoBehaviour
 
 
         // apply lifing force when pressing space
+        spacePressed = false;
+
         if (Input.GetKey(KeyCode.Space) && currentEnergy > 0 && liftingtimer > 0)
         {
         	// Debug.Log("spaced hited");
@@ -272,11 +276,8 @@ public class ThirdPersonController : MonoBehaviour
             spacePressed = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space)) {
-            spacePressed = false;
-        }
 
-        if (liftingtimer < liftingTime && !spacePressed) {
+        if (liftingtimer < maxLiftingTime && !spacePressed) {
             liftingtimer += Time.deltaTime;
         }
 
