@@ -12,7 +12,6 @@ public class ThirdPersonController : MonoBehaviour
 
     public CinemachineVirtualCamera cinemachines;
 
-    public bool aim = false;
     public bool displayWeaponWhenWalking = false;
 
 	public UIScript UI;
@@ -31,8 +30,8 @@ public class ThirdPersonController : MonoBehaviour
 	public float maxLiftingSpeed = 10f;
     public float liftingpCost = 10f;
 
-    public float maxLiftingTime = 5f;
-    public float liftingtimer = 5f;
+    public float maxOverHeatTime = 15;
+    public float overHeatTimer = 15f;
     bool spacePressed = false;
 	
 
@@ -51,6 +50,8 @@ public class ThirdPersonController : MonoBehaviour
 	public List<GameObject> weapons = new List<GameObject>();
 	public int currentWeapon = 0;
 
+    CharacterAiming characterAiming;
+
 
 
 
@@ -66,6 +67,9 @@ public class ThirdPersonController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        characterAiming = GetComponent<CharacterAiming>();
+
+        overHeatTimer = maxOverHeatTime;
 
     }
 
@@ -80,34 +84,17 @@ public class ThirdPersonController : MonoBehaviour
 
         moveDir = Vector3.zero;
 
-        if (aim) {
-        	float targetAngle = camTransform.eulerAngles.y;
-        	transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-
-        	weaponAttactedPoint.rotation = camTransform.rotation;
-
-        	weapons[currentWeapon].GetComponent<Renderer>().enabled = aim;
-
-
-        	// Weapon firing
-        	if (Input.GetMouseButtonDown(0)) {
-        		if (weapons[currentWeapon] != null) {
-        			weapons[currentWeapon].GetComponent<Weapons>().Fire();
-        		}
-        	}
-        }
-
         if (direction.magnitude >= 0.1f) 
         {
         	
         	float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camTransform.eulerAngles.y;
 
-        	if (!aim) {
+        	if (!characterAiming.isAiming) {
 	        	float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 	        	transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
                 if (!displayWeaponWhenWalking) {
-                    weapons[currentWeapon].GetComponent<Renderer>().enabled = aim;
+                    weapons[currentWeapon].GetComponent<Renderer>().enabled = characterAiming.isAiming;
                 }        
         	}
         	
@@ -118,40 +105,7 @@ public class ThirdPersonController : MonoBehaviour
         }
 
         // interact with object by pressing F 
-
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, 100, targetLayer)) {
-
-            // if (hit.transform != null 
-            //     && hit.transform.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
-
-            if (hit.transform != null) {
-
-                GameObject interactable = hit.transform.gameObject;
-                bool closeToInteract = interactable.GetComponent<Interactable>().distanceCheck(transform, camTransform);
-
-                if (Input.GetKeyDown(KeyCode.F) && closeToInteract) {
-
-                    SetFocus(interactable);
-                }                
-            }
-            
-        }
-
-        Debug.DrawLine(camTransform.position, hit.point,Color.red);
-        
-        if (Input.anyKey && !Input.GetKey(KeyCode.F)){
-            //remove focus for any other key input(for now, maybe better way next time)
-            RemoveFocus();
-        }
-
-        if (focus != null) {
-            FaceTarget();
-        }
-
-        // interaction part end
+        handleInteraction();
 
         // minimap on off
 
@@ -164,6 +118,7 @@ public class ThirdPersonController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space)){
             spacePressed = !spacePressed;
         }
+
 
         // weapon reload
         if (Input.GetKeyDown(KeyCode.R) && weapons.Count > 0) {
@@ -213,6 +168,45 @@ public class ThirdPersonController : MonoBehaviour
     }
 
 
+    void handleInteraction() {
+        // interact with object by pressing F 
+
+        Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100, targetLayer)) {
+
+            // if (hit.transform != null 
+            //     && hit.transform.gameObject.layer == LayerMask.NameToLayer("Interactable")) {
+
+            if (hit.transform != null) {
+
+                GameObject interactable = hit.transform.gameObject;
+                bool closeToInteract = interactable.GetComponent<Interactable>().distanceCheck(transform, camTransform);
+
+                if (Input.GetKeyDown(KeyCode.F) && closeToInteract) {
+
+                    SetFocus(interactable);
+                }                
+            }
+            
+        }
+
+        Debug.DrawLine(camTransform.position, hit.point,Color.red);
+        
+        if (Input.anyKey && !Input.GetKey(KeyCode.F)){
+            //remove focus for any other key input(for now, maybe better way next time)
+            RemoveFocus();
+        }
+
+        if (focus != null) {
+            FaceTarget();
+        }
+
+        // interaction part end
+    }
+
+
     void SetFocus(GameObject newFocus)
     {
         if (newFocus != focus) 
@@ -247,23 +241,17 @@ public class ThirdPersonController : MonoBehaviour
     void FixedUpdate()
     {	
 
-    	// if (Input.GetKey(KeyCode.LeftShift)) {
-    	// 	rb.MovePosition(rb.position + moveDir * speed * boosting * Time.fixedDeltaTime);
-    	// }
-    	// else {
-    	// 	rb.MovePosition(rb.position + moveDir * speed * Time.fixedDeltaTime);
-    	// }
-
-    	// Apply a force that attempts to reach our target velocity
         Vector3 velocity = rb.velocity;
         Vector3 velocityChange;
 
-        if (aim) {
+        if (characterAiming.isAiming) {
         	velocityChange = (moveDir * (speed / 2f) - velocity);
         }
-        else if (Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0) {
+        else if (Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0 && overHeatTimer > 0) {
     		velocityChange = (moveDir * sprinting - velocity);
     		currentEnergy -= Time.deltaTime * (sprintingCost - 1f);
+
+            overHeatTimer -= Time.deltaTime; 
     	}
     	else {
     		velocityChange = (moveDir * speed - velocity);
@@ -276,18 +264,18 @@ public class ThirdPersonController : MonoBehaviour
 
 
         // apply lifing force when pressing space
-        if (spacePressed && currentEnergy > 0 && liftingtimer > 0)
+        if (spacePressed && currentEnergy > 0 && overHeatTimer > 0)
         {   
             // Debug.Log("spaced hited");
             rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
             currentEnergy -= Time.deltaTime * (liftingpCost - 1f);
 
-            liftingtimer -= Time.deltaTime * 2;         
+            overHeatTimer -= Time.deltaTime * 3;         
         }
 
 
-        if (liftingtimer < maxLiftingTime && !spacePressed) {
-            liftingtimer += Time.deltaTime;
+        if (overHeatTimer < maxOverHeatTime && !spacePressed && !Input.GetKey(KeyCode.LeftShift)) {
+            overHeatTimer += Time.deltaTime * 3;
         }
 
     }

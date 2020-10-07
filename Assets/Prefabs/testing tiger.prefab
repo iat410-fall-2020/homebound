@@ -10982,6 +10982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc233c19ed9102f47b36f387a0e33441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move: {fileID: 6150010785085132525}
   isStuned: 0
   isCaptured: 0
   isLured: 0

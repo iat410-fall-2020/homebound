@@ -8,6 +8,7 @@ TagManager:
   - NetGun
   - TetherGun
   - Trap
+  - Lure
   layers:
   - Default
   - TransparentFX
