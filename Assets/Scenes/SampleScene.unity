@@ -464,7 +464,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-14854
+  m_Name: pb_Mesh192980
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5440,7 +5440,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15844
+  m_Name: pb_Mesh192310
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -86041,7 +86041,6 @@ Transform:
   - {fileID: 3478720335663243451}
   - {fileID: 1712077732}
   - {fileID: 798763989}
-  - {fileID: 7257895806743122848}
   - {fileID: 7721367092417878101}
   - {fileID: 498786915}
   m_Father: {fileID: 1575061012137582174}
@@ -88948,7 +88947,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15572
+  m_Name: pb_Mesh187740
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -89473,7 +89472,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-23462
+  m_Name: pb_Mesh186146
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -92893,6 +92892,7 @@ Transform:
   - {fileID: 373053558}
   - {fileID: 912990696}
   - {fileID: 1640298568}
+  - {fileID: 7257895806743122848}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -93014,7 +93014,7 @@ MonoBehaviour:
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
   m_Priority: 10
-  m_StandbyUpdate: 2
+  m_StandbyUpdate: 1
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 7257895806743122848}
   m_Lens:
@@ -94071,7 +94071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5614729326891299374, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5614729326891299374, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -94095,6 +94095,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5614729327602248944, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614729327678861243, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5845297996173360070, guid: 99892c8d86a471840890d52f67e9a76e, type: 3}
@@ -94180,7 +94184,7 @@ MonoBehaviour:
   xAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 450
+    m_MaxSpeed: 300
     m_AccelTime: 0.02
     m_DecelTime: 0.02
     m_InputAxisName: Mouse X
@@ -94198,7 +94202,7 @@ MonoBehaviour:
   yAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 450
+    m_MaxSpeed: 300
     m_AccelTime: 0.02
     m_DecelTime: 0.02
     m_InputAxisName: Mouse Y
@@ -94230,7 +94234,7 @@ MonoBehaviour:
   ShoulderOffset: {x: 0.5, y: 0.5, z: 0}
   VerticalArmLength: 0.4
   CameraSide: 0.5
-  CameraDistance: 12
+  CameraDistance: 11
   CameraCollisionFilter:
     serializedVersion: 2
     m_Bits: 257
@@ -94389,12 +94393,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3264467269935805926}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.9299998, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1001411392121163958}
-  m_Father: {fileID: 912990696}
+  m_Father: {fileID: 1575061012137582174}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7594535330134460289
@@ -94440,12 +94444,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6555036081526700593}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9000001, z: -12}
+  m_LocalPosition: {x: 0, y: 0.9000001, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8636132513417789233}
   m_Father: {fileID: 912990696}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &7851867193737085371
 CapsuleCollider:

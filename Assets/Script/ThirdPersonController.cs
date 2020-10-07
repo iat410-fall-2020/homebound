@@ -125,6 +125,11 @@ public class ThirdPersonController : MonoBehaviour
             weapons[currentWeapon].GetComponent<Weapons>().Reload();
         }
 
+        // check if display weapon
+        if (Input.GetKeyDown(KeyCode.T)){
+            displayWeaponWhenWalking = !displayWeaponWhenWalking;
+        }
+
         
 
 
@@ -249,9 +254,9 @@ public class ThirdPersonController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.LeftShift) && currentEnergy > 0 && overHeatTimer > 0) {
     		velocityChange = (moveDir * sprinting - velocity);
-    		currentEnergy -= Time.deltaTime * (sprintingCost - 1f);
+    		currentEnergy -= Time.fixedDeltaTime * (sprintingCost - 1f);
 
-            overHeatTimer -= Time.deltaTime; 
+            overHeatTimer -= Time.fixedDeltaTime; 
     	}
     	else {
     		velocityChange = (moveDir * speed - velocity);
@@ -268,14 +273,14 @@ public class ThirdPersonController : MonoBehaviour
         {   
             // Debug.Log("spaced hited");
             rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
-            currentEnergy -= Time.deltaTime * (liftingpCost - 1f);
+            currentEnergy -= Time.fixedDeltaTime * (liftingpCost - 1f);
 
-            overHeatTimer -= Time.deltaTime * 3;         
+            overHeatTimer -= Time.fixedDeltaTime * 3;         
         }
 
 
         if (overHeatTimer < maxOverHeatTime && !spacePressed && !Input.GetKey(KeyCode.LeftShift)) {
-            overHeatTimer += Time.deltaTime * 3;
+            overHeatTimer += Time.fixedDeltaTime * 3;
         }
 
     }
