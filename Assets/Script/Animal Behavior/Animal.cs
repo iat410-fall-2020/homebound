@@ -77,6 +77,9 @@ public class Animal : MonoBehaviour
 
     public void GetStuned(float f) {
     	isStuned = true;
+        ExitLure();
+
+        
 
     	gameObject.GetComponent<AutoMoveRotate>().enabled = false;
 		gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -91,5 +94,13 @@ public class Animal : MonoBehaviour
         lure = lurer;
 
         gameObject.GetComponent<AutoMoveRotate>().rotation = new Vector3();
+    }
+
+    public void ExitLure() {
+        isLured = false;
+        lure = null;
+        gameObject.GetComponent<AutoMoveRotate>().rotation = new Vector3(0 , Random.Range(-.9f, .9f) , 0);
+        animator.SetBool(isLuredParam, isLured);
+        gameObject.GetComponent<AutoMoveRotate>().enabled = true;
     }
 }

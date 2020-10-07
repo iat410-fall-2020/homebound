@@ -44,7 +44,9 @@ public class TetherBullet : MonoBehaviour
 
 	    		GameObject hitAnimal = collision.collider.transform.root.gameObject;
 
-	    		if (GetComponent<Collider>().GetComponent<Collider>().gameObject.tag == "Head") {
+                gameObject.GetComponent<Transform>().parent = collision.collider.transform;
+
+	    		if (collision.collider.gameObject.tag == "Head") {
 	    			hitAnimal.GetComponent<Animal>().GetStuned(criticalStun);
 
 	    			Debug.Log("head get hit");
