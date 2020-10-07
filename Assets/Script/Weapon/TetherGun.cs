@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class TetherGun : Weapons
 {
+	public Renderer projectileRender;
+
+	protected override void constantUpdate() 
+    {
+    	if (GetComponent<Renderer>().enabled) {
+    		if (!reloading) {
+    			projectileRender.enabled = true;
+    		}
+    		else {
+    			projectileRender.enabled = false;
+    		}
+    		
+    	}
+    	else {
+    		projectileRender.enabled = false;
+    	}
+    }
+
     protected override void WeaponBehavior ()
     {
 		Rigidbody bulletrb = Instantiate(bullet, barrelPivot.position, barrelPivot.rotation).GetComponent<Rigidbody>();

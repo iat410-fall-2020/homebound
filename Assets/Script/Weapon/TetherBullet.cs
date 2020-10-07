@@ -15,7 +15,7 @@ public class TetherBullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 20f);
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class TetherBullet : MonoBehaviour
  			rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
     		rb.isKinematic = true;
 
-    		Destroy(gameObject, selfDestroyTimer);
+    		
 
 
     		if ((animalLayer & 1 << collision.collider.gameObject.layer) == 1 << collision.collider.gameObject.layer){
@@ -48,13 +48,19 @@ public class TetherBullet : MonoBehaviour
 	    			hitAnimal.GetComponent<Animal>().GetStuned(criticalStun);
 
 	    			Debug.Log("head get hit");
+
+                    Destroy(gameObject, criticalStun);
 	    		}
 	    		else {
 	    			hitAnimal.GetComponent<Animal>().GetStuned(stunTime);
+                    Destroy(gameObject, stunTime);
 	    		}
 
 	    		
 	    	}
+            else {
+                Destroy(gameObject, stunTime);
+            }
     	}
     }
 }

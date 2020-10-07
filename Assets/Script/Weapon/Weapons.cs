@@ -18,6 +18,7 @@ public class Weapons : MonoBehaviour
     void Start()
     {
         currentMag = magazineSize;
+        GetComponent<Renderer>().enabled = false;
     }
 
     // Update is called once per frame

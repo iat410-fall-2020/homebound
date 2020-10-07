@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2759502024041196092}
   - component: {fileID: 8164361466852533892}
   - component: {fileID: 282650707273167730}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Lure
   m_TagString: Lure
   m_Icon: {fileID: 0}
