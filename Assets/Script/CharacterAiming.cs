@@ -14,6 +14,8 @@ public class CharacterAiming : MonoBehaviour
     public bool isAiming = false;
 	int isAimingParam = Animator.StringToHash("isAiming");
 
+    float turnSmoothVelocity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,7 @@ public class CharacterAiming : MonoBehaviour
         xAxis.Update(Time.deltaTime);
         yAxis.Update(Time.deltaTime);
 
+        CameraLookAt.position = gameObject.GetComponent<Transform>().position;
         CameraLookAt.eulerAngles = new Vector3(yAxis.Value , xAxis.Value, 0);
 
 
@@ -38,6 +41,7 @@ public class CharacterAiming : MonoBehaviour
 
         if (isAiming) {
             float targetAngle = controller.cam.GetComponent<Transform>().eulerAngles.y;
+
             transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
 
             controller.weaponAttactedPoint.rotation = controller.cam.GetComponent<Transform>().rotation;
