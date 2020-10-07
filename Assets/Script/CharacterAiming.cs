@@ -58,7 +58,7 @@ public class CharacterAiming : MonoBehaviour
 
                     if (hit.transform != null) {
 
-                        controller.weapons[controller.currentWeapon].GetComponent<PlaceableWeapon>().PlaceReference(hit.point);
+                        controller.weapons[controller.currentWeapon].GetComponent<PlaceableWeapon>().PlaceReference(hit);
                     }
                     
                 }

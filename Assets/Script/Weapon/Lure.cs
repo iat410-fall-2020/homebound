@@ -4,39 +4,39 @@ using UnityEngine;
 
 public class Lure : MonoBehaviour
 {
-	public Renderer render;
 
-	public Material placedDown;
-	public Material aiming;
-	public Material collides;
+	public LayerMask animalLayer;
+	public SphereCollider lureCollider;
+
+	public float lureRange;
 
 	bool placed = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        lureCollider.radius = lureRange;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!placed) {
-        	render.material = aiming;
+        if (placed) {
+
         }
 
 
     }
 
-    void OnCollisionStay(Collision collisionInfo)
-    {
-        Debug.Log("collides");
-    	render.material = collides;
-    }
-
     public void Place() {
     	placed = true;
-    	render.material = placedDown;
+    }
+
+    void OnTriggerStay(Collider collider) {
+    	if (placed && (animalLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer) {
+            
+    		collider.transform.root.gameObject.GetComponent<Animal>().GetLured(gameObject);
+    	}
     }
 
 

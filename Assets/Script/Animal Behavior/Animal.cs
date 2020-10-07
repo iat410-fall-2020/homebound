@@ -18,6 +18,8 @@ public class Animal : MonoBehaviour
 	int isCapturedParam = Animator.StringToHash("isCaptured");
 	int isLuredParam = Animator.StringToHash("isLured");
 
+    GameObject lure;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,17 +29,35 @@ public class Animal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isStuned && !isCaptured) {
-        	stunedTimer -= Time.deltaTime;
+        if (!isCaptured) {
+            if (isStuned) {
+                stunedTimer -= Time.deltaTime;
 
-        	if (stunedTimer <= 0) {
-        		isStuned = false;
+                if (stunedTimer <= 0) {
+                    isStuned = false;
 
-    			gameObject.GetComponent<AutoMoveRotate>().enabled = true;
-				animator.SetBool(isStunedParam, isStuned);
-        			
-        	}
+                    gameObject.GetComponent<AutoMoveRotate>().enabled = true;
+                    animator.SetBool(isStunedParam, isStuned);
+                        
+                }
+            }
+            else if (isLured) {
+                float distance = Vector3.Distance(lure.transform.position, transform.position);
+
+                if (distance > 7f) {
+                    Vector3 direction = (lure.transform.position - transform.position).normalized;
+                    Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
+                    gameObject.GetComponent<Transform>().rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+                }
+                else {
+                    gameObject.GetComponent<AutoMoveRotate>().enabled = false;
+                    animator.SetBool(isLuredParam, isLured);
+                }
+
+                
+            }
         }
+        
     }
 
     public void GetCaptured() {
@@ -64,5 +84,12 @@ public class Animal : MonoBehaviour
 		stunedTimer = f;
 
 		animator.SetBool(isStunedParam, isStuned);
+    }
+
+    public void GetLured(GameObject lurer) {
+        isLured = true;
+        lure = lurer;
+
+        gameObject.GetComponent<AutoMoveRotate>().rotation = new Vector3();
     }
 }
