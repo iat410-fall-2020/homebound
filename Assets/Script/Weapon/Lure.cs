@@ -50,7 +50,6 @@ public class Lure : MonoBehaviour
     void OnTriggerStay(Collider collider) {
     	if (duration <= 1
     		&& (animalLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer) {
-    		Debug.Log("exit lure");
     		collider.transform.root.gameObject.GetComponent<Animal>().ExitLure();
     	}
     }

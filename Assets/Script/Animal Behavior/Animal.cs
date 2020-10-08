@@ -62,17 +62,19 @@ public class Animal : MonoBehaviour
 
     public void GetCaptured() {
 
-    	isCaptured = true;
+        if (!isCaptured) {
+            isCaptured = true;
 
-    	gameObject.GetComponent<AutoMoveRotate>().enabled = false;
+            gameObject.GetComponent<AutoMoveRotate>().enabled = false;
 
-    	gameObject.GetComponent<Interactable>().enabled = true;
-		gameObject.layer = LayerMask.NameToLayer("Interactable");
-		gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            gameObject.GetComponent<Interactable>().enabled = true;
+            gameObject.layer = LayerMask.NameToLayer("Interactable");
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
-		animator.SetBool(isCapturedParam, isCaptured);
+            animator.SetBool(isCapturedParam, isCaptured);
 
-		interactCollider.enabled = true;
+            interactCollider.enabled = true;
+        }
     }
 
     public void GetStuned(float f) {
@@ -90,17 +92,26 @@ public class Animal : MonoBehaviour
     }
 
     public void GetLured(GameObject lurer) {
-        isLured = true;
-        lure = lurer;
 
-        gameObject.GetComponent<AutoMoveRotate>().rotation = new Vector3();
+        if (!isLured) {
+            isLured = true;
+            lure = lurer;
+
+            gameObject.GetComponent<AutoMoveRotate>().rotation = new Vector3();
+        }    
     }
 
     public void ExitLure() {
         isLured = false;
         lure = null;
+
         gameObject.GetComponent<AutoMoveRotate>().rotation = new Vector3(0 , Random.Range(-.9f, .9f) , 0);
-        animator.SetBool(isLuredParam, isLured);
-        gameObject.GetComponent<AutoMoveRotate>().enabled = true;
+
+        if (!isCaptured && !isStuned) {
+            
+            animator.SetBool(isLuredParam, isLured);
+            gameObject.GetComponent<AutoMoveRotate>().enabled = true;
+        }
+        
     }
 }

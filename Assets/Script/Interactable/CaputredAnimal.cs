@@ -9,7 +9,9 @@ public class CaputredAnimal : Interactable
     	ThirdPersonController playerController = player.GetComponent<ThirdPersonController>();
 	    ++playerController.currentResource;
 
-	    bullet.capturedAnimals.Remove(gameObject);
+	    if (bullet != null) {
+	    	bullet.capturedAnimals.Remove(gameObject);
+	    }
 
 	    playerController.focus = null;
 	    Destroy(gameObject);

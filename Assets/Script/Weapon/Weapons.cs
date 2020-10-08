@@ -5,7 +5,7 @@ using UnityEngine;
 public class Weapons : MonoBehaviour
 {
 	public int magazineSize;
-	public int currentMag;
+	protected int currentMag;
 	public float reloadTime;
 	public float reloadCountDown;
 	public int totalAmmo;
@@ -66,6 +66,10 @@ public class Weapons : MonoBehaviour
     public bool isReloading() 
     {
         return reloading;
+    }
+
+    public int getCurrentMag() {
+        return currentMag;
     }
 
 

@@ -1833,6 +1833,6 @@ MonoBehaviour:
   barrelPivot: {fileID: 0}
   aimReference: {fileID: 0}
   placedDown: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
-  aiming: {fileID: 2100000, guid: a1e97cbf2538241b691aae8243b5fb10, type: 2}
+  aiming: {fileID: 2100000, guid: bbb235fff4f48426b863b36058ab66d2, type: 2}
   warning: {fileID: 2100000, guid: affb5eb8ea6dbf94f8219958fea26d46, type: 2}
   warningAngle: 45

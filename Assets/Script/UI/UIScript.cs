@@ -41,7 +41,7 @@ public class UIScript : MonoBehaviour
 
         // upadate ammo amount
         Weapons playerWeapon = player.weapons[player.currentWeapon].GetComponent<Weapons>();
-        weaponUI.AmmoDisplay(playerWeapon.currentMag, playerWeapon.totalAmmo);
+        weaponUI.AmmoDisplay(playerWeapon.getCurrentMag(), playerWeapon.totalAmmo);
 
         // reload bar
         if (playerWeapon.isReloading()) {

@@ -1829,8 +1829,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   lureCollider: {fileID: 282650707273167730}
-  lureRange: 45
-  duration: 30
+  lureRange: 60
+  duration: 20
 --- !u!54 &8164361466852533892
 Rigidbody:
   m_ObjectHideFlags: 0

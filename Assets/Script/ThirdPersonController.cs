@@ -30,6 +30,8 @@ public class ThirdPersonController : MonoBehaviour
 	public float maxLiftingSpeed = 10f;
     public float liftingpCost = 10f;
 
+    public ParticleSystem liftingParticle;
+
     public float maxOverHeatTime = 15;
     public float overHeatTimer = 15f;
     bool spacePressed = false;
@@ -70,6 +72,8 @@ public class ThirdPersonController : MonoBehaviour
         characterAiming = GetComponent<CharacterAiming>();
 
         overHeatTimer = maxOverHeatTime;
+
+        liftingParticle.Pause();
 
     }
 
@@ -128,7 +132,12 @@ public class ThirdPersonController : MonoBehaviour
         // check if display weapon
         if (Input.GetKeyDown(KeyCode.T)){
             displayWeaponWhenWalking = !displayWeaponWhenWalking;
+
+            weapons[currentWeapon].GetComponent<Renderer>().enabled = displayWeaponWhenWalking;
         }
+
+        // esc to exit game 
+        
 
         
 
@@ -275,7 +284,12 @@ public class ThirdPersonController : MonoBehaviour
             rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
             currentEnergy -= Time.fixedDeltaTime * (liftingpCost - 1f);
 
-            overHeatTimer -= Time.fixedDeltaTime * 3;         
+            overHeatTimer -= Time.fixedDeltaTime * 3;   
+
+            liftingParticle.Play();      
+        }
+        else {
+            liftingParticle.Stop();
         }
 
 

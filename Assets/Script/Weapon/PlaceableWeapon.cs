@@ -6,18 +6,24 @@ public class PlaceableWeapon : Weapons
 {
 
 	public Transform aimReference;
-	bool isAiming = false;
+	protected bool isAiming = false;
 
 	public Material placedDown;
 	public Material aiming;
+    public Material warning;
+
+    protected bool fire = false;
 
 
     protected override void constantUpdate() 
     {
+        if (currentMag > 0) {
+            reloading = false;
+        }
 
     	if (aimReference != null) {
     		if (isAiming) {
-    		aimReference.gameObject.SetActive(true);
+    		  aimReference.gameObject.SetActive(true);
 	    	}
 	    	else {
 	    		aimReference.gameObject.SetActive(false);
@@ -34,6 +40,8 @@ public class PlaceableWeapon : Weapons
     			aimReference = Instantiate(bullet).GetComponent<Transform>();
 
     			aimReference.GetComponent<Renderer>().material = aiming;
+
+                fire = true;
     		}
 
     		aimReference.position = hit.point;

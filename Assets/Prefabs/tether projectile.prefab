@@ -4826,7 +4826,7 @@ GameObject:
   - component: {fileID: 3544986180028537530}
   - component: {fileID: 3544986180028537529}
   - component: {fileID: 3406408523697058614}
-  - component: {fileID: -3198587152792154536}
+  - component: {fileID: 8276625176838082907}
   m_Layer: 14
   m_Name: tether projectile
   m_TagString: Untagged
@@ -7571,8 +7571,8 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!64 &-3198587152792154536
-MeshCollider:
+--- !u!65 &8276625176838082907
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -7581,7 +7581,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.10837601, y: 0.09959753, z: 1.5186745}
+  m_Center: {x: 0.00000008195639, y: 0.0010059699, z: 0.005921066}
