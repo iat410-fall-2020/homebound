@@ -11309,7 +11309,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6150010786888678151}
-  m_Text: '[F] to collect Trophy'
+  m_Text: Press [F] to collect Trophy
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1

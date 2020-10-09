@@ -30,7 +30,7 @@ public class Hover : MonoBehaviour
 
         // Debug.DrawRay(transform.position, Vector3.down * hoverHeight);
 
-        if (Physics.Raycast(hoverRay, out hit, hoverHeight)) {
+        if (Physics.Raycast(hoverRay, out hit, hoverHeight) && !hit.collider.isTrigger) {
 			// The "error" in height is the difference between the desired height
             // and the height measured by the raycast distance.
             float hoverError = hoverHeight - hit.distance;

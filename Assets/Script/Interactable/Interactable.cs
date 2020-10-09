@@ -4,7 +4,7 @@ public class Interactable : MonoBehaviour
 {
     public float radius = 3f;
 
-    bool isFocus = false;
+    protected bool isFocus = false;
     protected GameObject player;
 
     bool hasInteracted = false;
@@ -60,7 +60,6 @@ public class Interactable : MonoBehaviour
     {	
         Vector3 direction = (transform.position - camTransform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
-        //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         text.transform.rotation = lookRotation;
 
     	float distance = Vector3.Distance(playerTransform.position, transform.position);

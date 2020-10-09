@@ -24,6 +24,10 @@ public class Animal : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        animator.SetBool(isStunedParam, isStuned);
+        animator.SetBool(isCapturedParam, isCaptured);
+        animator.SetBool(isLuredParam, isLured);
     }
 
     // Update is called once per frame
@@ -44,7 +48,7 @@ public class Animal : MonoBehaviour
             else if (isLured) {
                 float distance = Vector3.Distance(lure.transform.position, transform.position);
 
-                if (distance > 7f) {
+                if (distance > 5f) {
                     Vector3 direction = (lure.transform.position - transform.position).normalized;
                     Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
                     gameObject.GetComponent<Transform>().rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);

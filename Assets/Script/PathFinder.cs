@@ -8,7 +8,7 @@ public class PathFinder : MonoBehaviour
 {
 	NavMeshAgent agent;
 	public GameObject gfx;
-	public float selfDestoryTimer = 1.5f;
+	public float selfDestoryTimer = 7f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class PathFinder : MonoBehaviour
     {
         selfDestoryTimer -= Time.deltaTime;
 
-        if (selfDestoryTimer <= 4.95) {
+        if (selfDestoryTimer <= 7) {
         	gfx.SetActive(true);
         }
 

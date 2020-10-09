@@ -4881,7 +4881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gfx: {fileID: 6062316139661458341}
-  selfDestoryTimer: 5
+  selfDestoryTimer: 7
 --- !u!54 &-1855503485897080564
 Rigidbody:
   m_ObjectHideFlags: 0

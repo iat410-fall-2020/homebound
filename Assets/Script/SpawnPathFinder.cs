@@ -7,7 +7,7 @@ public class SpawnPathFinder : Interactable
 
 	bool spawnPathFinder = false;
 
-	float spawnGap = 1f;
+	float spawnGap = 1.5f;
 	float spawnTimer;
 
 	public float stopSpawnDistance = 7f;
