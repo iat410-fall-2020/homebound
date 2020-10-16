@@ -1831,6 +1831,8 @@ MonoBehaviour:
   lureCollider: {fileID: 282650707273167730}
   lureRange: 100
   duration: 20
+  luredAnimal: []
+  luredTime: 3
 --- !u!54 &8164361466852533892
 Rigidbody:
   m_ObjectHideFlags: 0

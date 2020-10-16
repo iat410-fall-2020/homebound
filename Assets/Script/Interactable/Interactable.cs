@@ -59,8 +59,7 @@ public class Interactable : MonoBehaviour
     public bool distanceCheck(Transform playerTransform, Transform camTransform) 
     {	
         Vector3 direction = (transform.position - camTransform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
-        text.transform.rotation = lookRotation;
+        text.transform.rotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
 
     	float distance = Vector3.Distance(playerTransform.position, transform.position);
 

@@ -14,6 +14,9 @@ public class Lure : MonoBehaviour
 
 	bool placed = false;
 
+    public List<Animal> luredAnimal = new List<Animal>();
+    public float luredTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +30,12 @@ public class Lure : MonoBehaviour
         if (placed) {
         	duration -= Time.deltaTime;
 
-        	if (duration <= 0) {
-        		Destroy(gameObject);
-        	}
+            if(duration <= 1) {
+                 foreach (Animal animal in luredAnimal) 
+                 {
+                     animal.ExitLure(gameObject);
+                 }
+            }
         }
 
 
@@ -38,20 +44,22 @@ public class Lure : MonoBehaviour
     public void Place() {
     	placed = true;
     	lureCollider.enabled = true;
+        Destroy(gameObject, duration);
     }
 
-    void OnTriggerEnter(Collider collider) {
-    	if (placed && (animalLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer) {
-            
-    		collider.transform.root.gameObject.GetComponent<Animal>().GetLured(gameObject);
-    	}
-    }
 
     void OnTriggerStay(Collider collider) {
-    	if (duration <= 1
-    		&& (animalLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer) {
-    		collider.transform.root.gameObject.GetComponent<Animal>().ExitLure();
-    	}
+        if (placed && (animalLayer & 1 << collider.gameObject.layer) == 1 << collider.gameObject.layer) {
+            if (duration > 1) {
+                Animal newAnimal = collider.transform.root.gameObject.GetComponent<Animal>();
+
+                if (!luredAnimal.Contains(newAnimal)) {
+                    luredAnimal.Add(newAnimal);
+                    newAnimal.GetLured(gameObject, luredTime);
+                }
+            }           
+            
+        }
     }
 
 

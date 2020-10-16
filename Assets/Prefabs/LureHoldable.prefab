@@ -1824,9 +1824,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magazineSize: 1
-  currentMag: 1
-  reloadTime: 0
-  reloadCountDown: 0
+  reloadTime: 30
+  reloadCountDown: 30
   totalAmmo: 30
   power: 0
   bullet: {fileID: 538738012849875674, guid: c07ec8ba5c16dc141be634bd87c22ac3, type: 3}

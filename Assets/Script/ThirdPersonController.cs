@@ -32,10 +32,11 @@ public class ThirdPersonController : MonoBehaviour
 
     public ParticleSystem liftingParticle;
 
-    public float maxOverHeatTime = 15;
-    public float overHeatTimer = 15f;
-    bool spacePressed = false;
-	
+    public float maxOverHeatTime = 30f;
+    public float overHeatTimer = 30f;	
+    public float liftingCoolDown = 5f;
+    public float sprintCoolDown = 1f;
+
 
     public LayerMask targetLayer;
 
@@ -115,12 +116,6 @@ public class ThirdPersonController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M)) {
         	UI.AffectMinimap();
-        }
-
-
-        // check if space is pressed 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyUp(KeyCode.Space)){
-            spacePressed = !spacePressed;
         }
 
 
@@ -265,7 +260,7 @@ public class ThirdPersonController : MonoBehaviour
     		velocityChange = (moveDir * sprinting - velocity);
     		currentEnergy -= Time.fixedDeltaTime * (sprintingCost - 1f);
 
-            overHeatTimer -= Time.fixedDeltaTime; 
+            overHeatTimer -= Time.fixedDeltaTime * sprintCoolDown; 
     	}
     	else {
     		velocityChange = (moveDir * speed - velocity);
@@ -278,13 +273,13 @@ public class ThirdPersonController : MonoBehaviour
 
 
         // apply lifing force when pressing space
-        if (spacePressed && currentEnergy > 0 && overHeatTimer > 0)
+        if (Input.GetKey(KeyCode.Space) && currentEnergy > 0 && overHeatTimer > 0)
         {   
             // Debug.Log("spaced hited");
             rb.AddForce(Vector3.up * (liftingpSpeed * (1 - (rb.velocity.y / maxLiftingSpeed))), ForceMode.Acceleration);
             currentEnergy -= Time.fixedDeltaTime * (liftingpCost - 1f);
 
-            overHeatTimer -= Time.fixedDeltaTime * 3;   
+            overHeatTimer -= Time.fixedDeltaTime * liftingCoolDown;   
 
             liftingParticle.Play();      
         }
@@ -293,8 +288,8 @@ public class ThirdPersonController : MonoBehaviour
         }
 
 
-        if (overHeatTimer < maxOverHeatTime && !spacePressed && !Input.GetKey(KeyCode.LeftShift)) {
-            overHeatTimer += Time.fixedDeltaTime * 3;
+        if (overHeatTimer < maxOverHeatTime && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.LeftShift)) {
+            overHeatTimer += Time.fixedDeltaTime;
         }
 
     }
