@@ -139,8 +139,6 @@ public class Animal : MonoBehaviour
             ExitLure(lure);
 
             stop();
-
-            gameObject.GetComponent<AutoMoveRotate>().enabled = false;
             
 
             stunedTimer = f;
