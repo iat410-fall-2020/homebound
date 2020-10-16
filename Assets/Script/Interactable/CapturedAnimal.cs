@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CaputredAnimal : Interactable
+public class CapturedAnimal : Interactable
 {
 	public NetBullet bullet;
 

@@ -70,8 +70,8 @@ public class NetBullet : MonoBehaviour
     		if (!duplicate && !newAnimal.GetComponent<Animal>().isCaptured) {
     			capturedAnimals.Add(newAnimal);
     			newAnimal.GetComponent<Animal>().GetCaptured();
-                newAnimal.GetComponent<CaputredAnimal>().enabled = true;
-    			newAnimal.GetComponent<CaputredAnimal>().bullet = this;
+                newAnimal.GetComponent<CapturedAnimal>().enabled = true;
+    			newAnimal.GetComponent<CapturedAnimal>().bullet = this;
     		}
 
     		

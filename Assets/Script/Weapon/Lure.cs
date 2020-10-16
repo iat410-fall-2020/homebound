@@ -32,8 +32,8 @@ public class Lure : MonoBehaviour
 
             if(duration <= 1) {
                  foreach (Animal animal in luredAnimal) 
-                 {
-                     animal.ExitLure(gameObject);
+                 {  
+                    if (animal != null) animal.ExitLure(gameObject);
                  }
             }
         }
