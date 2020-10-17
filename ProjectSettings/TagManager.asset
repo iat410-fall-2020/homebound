@@ -9,6 +9,7 @@ TagManager:
   - TetherGun
   - Trap
   - Lure
+  - Flyboy
   layers:
   - Default
   - TransparentFX

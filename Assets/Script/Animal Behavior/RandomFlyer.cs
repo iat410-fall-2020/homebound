@@ -10,7 +10,7 @@ public class RandomFlyer : MonoBehaviour
     [SerializeField] float idleSpeed, turnSpeed, switchSeconds, idleRatio;
     [SerializeField] Vector2 animSpeedMinMax, moveSpeedMinMax, changeAnimEveryFromTo, changeTargetEveryFromTo;
     public Transform homeTarget;
-    [SerializeField] Transform flyingTarget, currentTarget;
+    [SerializeField] Transform flyingTarget, backupTarget, currentTarget;
     [SerializeField] Vector2 radiusMinMax;
     [SerializeField] Vector2 yMinMax;
     [SerializeField] public bool returnToBase = false;
@@ -44,6 +44,12 @@ public class RandomFlyer : MonoBehaviour
         {
             delayStart -= Time.fixedDeltaTime;
             return;
+        }
+
+        // check if flyingTarget still exist
+        if (flyingTarget == null) {
+        	flyingTarget = backupTarget;
+        	currentTarget = flyingTarget;
         }
 
         // Calculate distances
@@ -128,16 +134,16 @@ public class RandomFlyer : MonoBehaviour
         else body.velocity = Mathf.Lerp(prevSpeed, speed, Mathf.Clamp(timeSinceAnim / switchSeconds, 0f, 1f)) * direction;
 
         // Hard-limit the height, in case the limit is breached despite of the turnaround attempt
-        if (body.transform.position.y < currentTarget.position.y + yMinMax.x || body.transform.position.y > currentTarget.position.y + yMinMax.y)
-        {
-            // position = body.transform.position;
-            // position.y = Mathf.Clamp(position.y, currentTarget.position.y + yMinMax.x, currentTarget.position.y + yMinMax.y);
-            // body.transform.position = position;
+        // if (body.transform.position.y < currentTarget.position.y + yMinMax.x || body.transform.position.y > currentTarget.position.y + yMinMax.y)
+        // {
+        //     // position = body.transform.position;
+        //     // position.y = Mathf.Clamp(position.y, currentTarget.position.y + yMinMax.x, currentTarget.position.y + yMinMax.y);
+        //     // body.transform.position = position;
 
-            rotateTarget = ChangeDirection(body.transform.position);
+        //     rotateTarget = ChangeDirection(body.transform.position);
 
-            // rotateTarget.y += .5f * Time.fixedDeltaTime;
-        }
+        //     // rotateTarget.y += .5f * Time.fixedDeltaTime;
+        // }
     }
 
     // Select a new animation speed randomly

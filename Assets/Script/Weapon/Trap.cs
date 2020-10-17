@@ -29,7 +29,8 @@ public class Trap : MonoBehaviour
 
             Vector3 direction = (pairTrap.position - partical.GetComponent<Transform>().position).normalized;
 
-        	if (Physics.Raycast(partical.GetComponent<Transform>().position, direction, out hit, checkDistance / 2.0f , animalLayer)) {
+        	if (Physics.Raycast(partical.GetComponent<Transform>().position, direction, out hit, checkDistance / 2.0f , animalLayer)
+        		&& hit.collider.transform.root.tag != "Flyboy") {
 
                 hit.collider.transform.root.GetComponent<Animal>().GetCaptured();
         	}

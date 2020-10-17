@@ -40,7 +40,6 @@ public class Flyboy : Animal
             toLocation(lure.transform);
         }
         else { // reaches lured location
-            gameObject.GetComponent<AutoMoveRotate>().enabled = false;
             animator.SetBool(isLuredParam, isLured);
 
             statusSprite.GetComponent<SpriteRenderer>().sprite = hungrySprite;
